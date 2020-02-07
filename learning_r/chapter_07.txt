@@ -1,0 +1,255 @@
+Strings and Factors
+
+Strings
+	paste()
+		combines strings togeter
+		r{
+			paste(c("red", "yellow"), "lorry")
+			paste(c("red", "yellow"), "lorry", sep = "-")
+			paste(c("red", "yellow"), "lorry", collapse = ", ")
+			paste0(c("red", "yellow"), "lorry")
+		}
+	toString()
+		useful for printing vectors
+		separates each element with a comma and a spave, and van limit how much we print
+		r{
+			x <- (1:15) ^2
+			toString(x)
+			toString(x, width = 40)			#width limits output to 40 characters
+		}
+	cat()
+		low-level function that works similarly to paste, but with less formatiing
+		r{
+			cat(c("red", "yellow"), "lorry")
+		}
+	Usually, when strings are printed to the console they are shown wrapped in double quotes. to remove pass the noquote function
+	Formatting Numbers
+		.formatC
+			uses C-style formatting specifications that allow ou to specify fixed or scientific formatting, the number of decimals places, and teh width of the output.
+			r{
+				pow <- 1:3
+				(powers_of_e <- exp(pow))
+
+				formatC(powers_of_e)
+				formatC(powers_of_e, digits = 3)
+				formatC(powers_of_e, digits = 3, width = 10)
+				formatC(powers_of_e, digits = 3, format = "e")
+				formatC(powers_of_e, digits = 3, flag = "+")
+			}
+
+		R also provides slightly more general C-style formating with the function sprintf
+		r{
+			sprintf("%s %d = %f", "Euler's constant to the power", pow, powers_of_e)
+			sprintf("To three decimal places, e ^ %d = %d = %.3f", pow, powers_of_e)
+			sprintf("in scientific notation, e ^ %d = %e", pow, powers_of_e)
+		}
+
+		Alternative syntaxes for formatting numbers are provided with the format and pretty num funchions. format just provides a slightly different syntax for formatting strings, and has similar usage to formatC.frettyNum, on the other hand, is best for pretty formatting of very big or very small numbers
+		r{
+			format(powers_of_e)
+			format(powers_of_e, digits = 3)
+			format(powers_of_e, digits = 3, trim = TRUE)
+			format(powers_of_e, digits = 3, scientific = TRUE)
+			prettyNum(
+				c(1e10, 1e-20),
+				big.mark = ",",
+				small.mark = " ",
+				preserve.width = "individual",
+				scientific = FALSE
+			)
+		}
+	Special Characters
+		some special characters
+			use cat sprintf 
+			\t = tab
+			the argument fill = TRUE makes cat move the cursor to a new line after it is finished
+			\n = newline character
+			\r = starts at current line with out new line for to rewrite same line
+			r{
+				cat("foo\tbar", fill = TRUE)
+				cat("foo\nbar", fill = TRUE)
+				cat("foo\0bar", fill = TRUE)
+				cat("foo\\bar", fill = TRUE)
+				cat("foo\"bar", fill = TRUE)
+				cat('foo\'bar', fill = TRUE)
+				cat("foo'bar", fill = TRUE)
+				cat('foo"bar', fill = TRUE)
+				cat("\a") 					#makes an alarm beep
+				alarm()
+			}
+	Changing Case
+		Strings can be converted to contain all uppercase or all lowercase values using the funnctions toupper and tolower
+		r{
+			toupper("I'm Shouting")
+			tolower("I'm Whispering")
+		}
+	Extracting substrings
+		two functions:
+			substring() and substr()
+			mostly the same but behave in different ways when you pass vectors of different lengths as arguments. For substring the output is as ong as the longest input; for substr, the output is as long as the first input
+			
+	Splitting Strings
+		strsplit()
+		spilt strings apart at specififed cut points
+		fixed = TRUE means that the split srgument is a fixed string rather than a regular expression
+		r{
+			strsplit(woodchuck, " ", fixed = TRUE)
+		}
+		this will return a list
+		r{
+		strsplit(woodchuck, ",? ")
+		}
+		to split on the optional comma use regex. ? means make the previous character optional
+
+	File paths
+		R has a working directory, the default place thata files will be read from or written to
+		you can see its location with getwd() and change it with setwd()
+		r{
+			getwd()
+			setwd("c:/windows")
+			getwd()
+		}
+
+		file.path
+			lets you construct file paths from individual directory names
+			r{
+				file.path("c:","Program Files","R","R-devel")
+				R.home()		#same place: a shortcut to teh R installation dir
+			}
+		use linux terms to navigate directories. (. .. ~)
+
+		basename()
+			returns the name of a file without the preceding directory location
+
+Factors
+	Creating Factors
+		r{
+			(heights <- data.frame(
+				height_cm = c(153, 181, 150, 172, 165, 149, 174, 169, 198, 163),
+				gender = c(
+					"female", "male", "female", "male", "male", "female", "female", "male", "male", "female"
+				)
+			))
+			class(heights$gender)
+		}
+		## "factor"
+		notice gender is a factor not a character vector
+		levels()
+			returns levels
+		nlevels()
+			returns number of levels
+		factor()
+			create factors outside of their automatic creation inside data frames
+			r{
+				gender_char = c(
+						"female", "male", "female", "male", "male", "female", "female", "male", "male", "female"
+					)
+				(gender_fac <- factor(gender_char))
+			}
+	Changing facor levels
+		We can change the order of teh levels when the factor is created by specifying a levels argument
+		r{
+			factor(gender_char, levels = c("male", "female"))
+		}
+		To change the order of the factor levels after creation, use the factor funtion, passing in the existing factor(rather than a character vector)
+		r{
+			factor(gender_ac, levels = c("male", "female"))
+		}
+		relevel()
+			change the order of factor lceles
+			r{
+				relevel(gender_fac, "male")
+			}
+	Dropping Factor levels
+		This data set will be used in further examples
+		r{
+			getting_to_work <- data.frame(
+				mode = c(
+					"bike", "car", "bus", "car", "walk", "bike", "car", "bike", "car", "car"
+				),
+				time_mins = c(25, 13, NA, 22, 65, 28, 15, 24, NA, 14)
+			)
+		}	
+		Not all the times have been recorded, so our first task is to remove the rows where time_mins is NA
+		r{
+			(getting_to_work <- subset(getting_to_work, !is.na(time_mins)))
+		}
+		Looking at eh mode column, there are now just three different values, but we still have the same four levels in the factor. We can see this with unique function(the levels function will, of course, also tell us the levels of the factor)
+		r{
+			unique(getting_to_work$mode)
+		}
+		droplevels()
+			used to drop unused levels
+			r{
+				getting_to_work$mode <- droplevels(getting_to_work$mode)
+				getting_to_work <- droplevels(getting_to_work)
+				levels(getting_to_work$mode)
+			}
+	Ordered Factors
+		r{
+			happy_choices <- c("depressed", "grumpy", "so-so", "cheery", "ecstatic")
+			happy_values <- sample(
+				happy_choices,
+				10000,
+				replace = TRUE
+			)
+			happy_fac <- factor(happy_values, happy_choices)
+			head(happy_fac)
+		}
+		to make levels ordered use ordered() 
+		r{
+			happy_ord <- ordered(happy_values, happy_choices)
+			head(happy_ord)
+		}
+	Converting Continuous Variables to Categorical
+		cut()
+			cuts a numeric variable into pieces, returning a factor
+			commonly used with the table function to get counts of numbers in different groups.
+		In the next example, we randomly generate the ages of ten thousand workers (from 16 to 66, using a beta distribution) and put them in 10-year-wide gorups
+		r{
+			ages <- 16+50 * rbeta(10000, 2, 3)
+			grouped_ages <- cut(ages, seq.int(16, 66, 10))
+			head(grouped_ages)
+
+			table(grouped_ages)
+		}
+	Converting Categorical Variables to Continuous
+		r{
+			dirty <- data.frame(
+				x = c("1.23", "4..56", "7.89")
+			)
+			as.numeric(dirty$x)
+
+		}
+		to correctlyu convert the factor to numeric, we can first retrieve the values by converting the factor to a chaacter vector.
+		r{
+			as.numeric(as.character(dirty$x))
+			as.numeric(levels(dirty$x))[as.integer(dirty$x)]
+		}
+		Since this is not entirely intuitive, if you want to do this task regularly, you can wrap it into a function for convenience
+		r{
+			factor_to_numeric <- function(f){
+				as.numeric(levels(f))[as.integer(f)]
+			}
+		}
+	Generating Factor levels
+		For balanced data, where there are an equal number of data points for each level, the gl function can be used to generate a factor. In its simplest form, the function takes an integer for the number of levels in the resultant factor, and another integer for how many times each level should be repeated. More commonly, you will want to set the names of the levels, which is achieved by pasing a character vector to the labels argument. More complex level orderings, such as alternating values, can be created by also passing a length argument
+		r{
+			gl(3,2)
+			gl(3, 2, labels = c("placebo", "drug A", "drug B"))
+			gl(3, 1, 6, labels = c("placebo", "drug A", "drug B")) 		#alternating
+		}
+	Combining Factors
+		if we have multiple categorical variables, it is sometimes useful to combine them into a single factor, where each level consists of the interactions of the individual variables
+		r{
+			treatment <- gl(3, 2, labels = c("placebo", "drug A", "drug B"))
+			gender <- gl(2, 1, 6, labels = c("female", "male"))
+			interaction(treatment, gender)
+		}
+
+Summary
+	You can combine strings together using paste and its derivatives
+	There are many functions for formatting numbers
+	Categorical daata is stored in factors (or ordered factors)
+	Each possible category in a factor is called a level
+	Continuous variables can be cut into categorical variables

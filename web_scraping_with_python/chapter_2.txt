@@ -1,0 +1,60 @@
+BeautifulSoup find() and find_all()
+	find_all(tag, attributes, recursive, text, limit, keywords)
+	find(tag, attributes, recursive, text, keywords)
+	.find_all('span', {class': {'green', 'red'dd}})
+
+the two following lines are identical
+can't use (class = 'text') because class is a reserved word use the next one
+	bs.find_all(id = 'text')		
+	bs.find_all('',{'id':'text'})
+
+BeautifulSoup objects
+	BeautifulSoup objects
+		Instances seen in previous code examples as teh variable bs
+	Tag objects
+		Retrieced i lists, or retrieed in dividually be calling find and find_all on BeautifulSoup object, or drilling down, as follows:
+			bs.div.h1
+	NavigableString objects
+		Used to represent text within tags, rather than the tags themselves (some functions operate on and produce NavigableStrings, rather than tag objects).
+	Comment object
+		used to find HTML comments in somment tags, <!--like this one-->
+
+Regular expressions
+	example rules:
+		Write the letter a at least once
+		append to this the letter b exactly five times
+		append to this the letter c any even number of times
+		write either the letter d or e at the end
+	regex: aa*bbbbb(cc)*(d|e)
+	Use http://regexpal.com/ for practice
+
+Common regex symbols
+	* 
+		matches the preceding character, subexpression, or bracketed character, 0 or more times
+	+ 
+		matches the preceding character, subexpression, or bracketed character, 1 or more times
+	[]
+		matches any character within the brackets (i.e., "Pick any one of these things").
+	()
+		A grouped subexpression (these are evaluated first, in the "order of operations" of regular expression)
+	{m,n}
+		Matches the preceding character, subexpression, or bracketed character between m and n many times (inclusive)
+	[^] 
+		Matches any single character that is not in the brackets
+	|
+		Matches any single character that is not in the brackets
+	.
+		Matches any singele character (including symbols, numbers, a space, etc.)
+	^
+		Indicates that a character or subexpression occurs at the beginning of a string
+	\
+		An escape character (this allows you to use special charachters as their liteal meanings)
+	$
+		Often used at the end of a regular expression, it means "match this up to the end of the string." Without it, every regular expression has a de facto ".*" at the end of iit, accepting strings where only the first part of the string matches. This can be thought of as analogous to the ^ symbol
+	?!
+		"Does not contain." This odd pariing of symbols, immediately preceding a character (or regular expression), indicates taht that character should no be found in that specific place in the larger string. This can be tricky to use; after all. the character might be found in a different part of the string. If trying to elimate a character entirely, use in conjunction with a ^ and $ at either end
+	
+	email example of regex:
+		[A-Za-z0-9._+]+@[A-Za-z]+.(com|org|net|edu)
+
+

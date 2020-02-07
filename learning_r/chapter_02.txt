@@ -1,0 +1,14 @@
+A scientific computer
+comparing
+	To check that two numbers are the same use all.equal not ==
+	use == for strings and ints
+assignment
+	x <- 34
+	y = c(4, 6, 8)
+	<- is recommended for historical purposes
+	<<- is used for global assignment
+any and all logical statements
+	any(), all() if TRUE then TRUE
+Summary:
+	R has special values for positive and negative infinity, not-a-number, and missing values, to assist wtih mathematical operations
+	R uses troolean logic

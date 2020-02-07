@@ -1,0 +1,43 @@
+Flow Control and Loops
+Flow Control
+	if and else
+	r{
+		if(TRUE) message("It was true!")
+		if(FLASE) message("It wan't true!")
+	}
+	missing values aren't allowed to be passed to if; doing so throws an error
+	r{
+		if (NA) message("Who knows if it was true?")
+	}
+	where you may have a missing value, you should test for it using is.na
+	r{
+		if(is.na(NA)) message("The value is missing!")
+	}
+	In this next example runif(1) generates one uniformly distributed random number between 0 and 1. If that value is more than 0.5, then the message is displayed
+	r{
+		if(tunif(1)>0.5) message("This message appears with a 50% chance.")
+	}
+	If you want to conditionally execute several statements, you can wrap them in curly braces
+	r{
+		x <- 3
+		if(x > 2)
+		{
+			y <- 2 * x
+			z <- 3 * y
+		}
+	}
+	if else example
+	r{
+		if(FALSE)
+		{
+			message("This won't execute...")
+		} else
+		{
+			message("but this will.")
+		}
+	}
+	**the else statement must occur on the same line as teh closing curl race from the if clause. If you move it to the next line you'll get an error
+	else if statements
+	r{
+
+	}

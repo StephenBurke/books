@@ -1,0 +1,70 @@
+Inspecting Varibables and Your Workspace
+
+Classes
+	You can find out what the calss of a variable is using class(my_variable)
+		class(c(TRUE, FALSE))
+		## [1] "logical"
+
+Different types of numbers
+	numeric, complex, integer 
+
+Other common classes
+	character
+		for storing text
+	factors
+		for storing categorical data
+	raw
+		for storing binary data
+
+the sample function
+	gender_char <- sample(c("femal","male"), 10000, replace = TRUE)
+	gender_fac <- as.factor(gender_char)
+	object.size(gender_char)
+	## 80136 bytes
+	object.size(gender_fac)
+	## 40512 bytes
+
+to convert use as.'what_you're_convering_to' function as in the previous example
+
+complete list of the is functions in the base package using
+	ls(pattern = "^is", baseenv())
+the assertive package contains more is functions with a consistent naming scheme
+
+inside loops or functions the automatic printing doesn't happen, so we ahve to explicitly call print. also true for terminal on some systems
+	ulam_spiral <- c(1, 8, 23, 46, 77)
+	for(i in ulams_spiral) print(i)
+
+letters and summary
+	letters
+		a built in constant for lower case letters 'a - z'
+	LETTERS
+		^^but for caps
+	fac <- factor(sample(letters[1:5], 30, replace = TRUE))
+	summary(fac)
+
+	bool <- sample(c(TURE, FALSE, NA), 30, replace = TRUE)
+	summary(bool)
+
+dataframes
+	dfr <- data.frame(num, fac, bool)
+	head(dfr)
+
+str()
+	revieles the objects structure
+
+unclass()
+	used to bypass how each class is displayed to he console
+
+attributes()
+	gives you a list of all the atttributes belonging to an object
+
+ls()
+	lets you see the variables you've created
+	like linus
+Summary:
+	All variables have a class
+	You test if an object has a particular class using the is function, or one of its class-specific variants
+	You can change the class of an object using the as function, or one of its class-specific variants
+	There are several functions that let you inspect variables, including summary, head, str, unclass, attributes, and View
+	ls lists the names of your variables and ls.str lists them along with their structure
+	rm removes your variables
