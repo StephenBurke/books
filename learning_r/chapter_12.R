@@ -197,3 +197,4 @@ local_copy <- "my_local_copy.csv"
 download.file(salary_url, local_copy)
 salary_data <- read.csv(local_copy)
 
+#stuff about accessing relational databases
