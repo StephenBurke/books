@@ -19,7 +19,7 @@ library(stringr)
 multiple_kingdoms <- str_detect(english_monarchs$domain, fixed(","))
 english_monarchs[multiple_kingdoms, c("name", "domain")]
 
-#searching for a comma or the word 'and'
+#searching for a comma or the word 'and' using regex
 
 multiple_rulers <- str_detect(english_monarchs$name, ",|and")
 english_monarchs$name[multiple_rulers & !is.na(multiple_rulers)]
