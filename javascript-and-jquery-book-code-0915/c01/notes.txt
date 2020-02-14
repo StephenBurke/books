@@ -1,0 +1,6 @@
+The abc's of programming
+
+Writing a script
+	1. Define the goal
+	2. Desging the script
+	3. Code each step
